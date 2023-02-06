@@ -8,7 +8,7 @@ export ZSH="/home/tim/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -45,7 +45,7 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -68,7 +68,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git helm kubectl fzf)
+# plugins=(git helm kubectl fzf)
+plugins=(fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,3 +106,13 @@ source $HOME/.oh-my-zsh/custom/plugins/fzf-zsh-completions/fzf-zsh-completions.p
 
 
 zstyle ':completion:*' fzf-search-display false
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ -e /home/tim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export PATH="/home/tim/.local/share/coursier/bin:$PATH"
+
+eval "$(cs java --jvm 11 --env)"
+
+eval "$(starship init zsh)"

@@ -1,1 +1,1 @@
-credentials += Credentials(Path.userHome / ".azure-credentials")
+// credentials += Credentials(Path.userHome / ".azure-credentials")
