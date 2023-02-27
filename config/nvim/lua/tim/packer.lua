@@ -61,7 +61,12 @@ return require('packer').startup(function(use)
   
   -- statusline
   use {
-  'nvim-lualine/lualine.nvim',
-  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-}
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+  use {
+    "unisonweb/unison",
+    branch = "trunk",
+    rtp = "/editor-support/vim"
+  }
 end)
