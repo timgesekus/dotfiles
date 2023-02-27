@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/tim/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -107,6 +107,16 @@ source $HOME/.oh-my-zsh/custom/plugins/fzf-zsh-completions/fzf-zsh-completions.p
 
 zstyle ':completion:*' fzf-search-display false
 
+export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
+export PATH=$PATH:$HOME/Desktop/workspace/dev-tools
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+
+source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -e /home/tim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
