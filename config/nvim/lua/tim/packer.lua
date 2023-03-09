@@ -13,6 +13,9 @@ return require('packer').startup(function(use)
 			vim.cmd('colorscheme rose-pine')
 		end
 	})
+
+  use 'shaunsingh/nord.nvim'
+
 	--
 	-- telescope
 	use {
@@ -64,9 +67,24 @@ return require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+
   use {
-    "unisonweb/unison",
+    'unisonweb/unison',
     branch = "trunk",
-    rtp = "/editor-support/vim"
+    rtp = "editor-support/vim"
   }
+  -- smart splits with tmux
+  use('mrjones2014/smart-splits.nvim')
+
+  -- code actions
+  use {
+    'kosayoda/nvim-lightbulb',
+    requires = 'antoinemadec/FixCursorHold.nvim',
+  }
+  use({
+    'weilbith/nvim-code-action-menu',
+    cmd = 'CodeActionMenu',
+  }) 
+  -- dap
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 end)
