@@ -12,3 +12,5 @@ git clone https://github.com/chitoku-k/fzf-zsh-completions $ZSH_CUSTOM/plugins/f
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+brew install fzf fd ripgrep
