@@ -6,4 +6,7 @@ lsp.preset('recommended')
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
+require'lspconfig'.unison.setup{}
 lsp.setup()
+
+

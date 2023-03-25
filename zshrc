@@ -123,7 +123,7 @@ source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 if [ -e /home/tim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export PATH="/home/tim/.local/share/coursier/bin:$PATH"
-
+export PATH="$HOME/unisonlang:$PATH"
 eval "$(cs java --jvm 11 --env)"
 
 eval "$(starship init zsh)"
