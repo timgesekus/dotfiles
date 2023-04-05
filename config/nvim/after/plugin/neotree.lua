@@ -1,1 +1,1 @@
-vim.api.nvim_set_keymap('n', '<leader>pt', ':Neotree<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>ft', ':Neotree<CR>', {noremap = true})
