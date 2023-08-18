@@ -114,11 +114,10 @@ use({
 
   use {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     requires = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
       "MunifTanjim/nui.nvim",
       {
         -- only needed if you want to use the commands with "_with_window_picker" suffix
@@ -146,4 +145,5 @@ use({
       )
     end
   }
+  use {'sindrets/diffview.nvim'}
 end)
