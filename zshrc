@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-source /usr/local/etc/bash_completion.d/az
+source $HOME/.config/az/az.complition
 # source /etc/bash_cyypompletion.d/azure-cli
 
 #fzf
@@ -110,14 +110,14 @@ zstyle ':completion:*' fzf-search-display false
 
 export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
 export PATH=$PATH:$HOME/Desktop/workspace/dev-tools
-PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/$HOME/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
-eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+#PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+#PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+#PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+#PERL_MB_OPT="--install_base \"/$HOME/perl5\""; export PERL_MB_OPT;
+#PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+#eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
+#source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -e /home/tim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
@@ -132,6 +132,7 @@ source "$HOME/.cargo/env"
 
 export PATH=$HOME/workspace/dev-tools:$PATH
 export PATH=$HOME/bin:$PATH
+export PATH=/home/tim/.deno/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

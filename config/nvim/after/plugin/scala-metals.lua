@@ -18,13 +18,13 @@
 --   - hrsh7th/vim-vsnip for snippet sources
 --
 -- - https://github.com/wbthomason/packer.nvim for package management
--- - https://github.com/mfussenegger/nvim-dap (for debugging)
+-- - https://github.com/mfussenegger/nvim-dap (for debugging   )
 -------------------------------------------------------------------------------
 local api = vim.api
 local cmd = vim.cmd
 local map = vim.keymap.set
 
-
+local wk = require("which-key")
 ----------------------------------
 -- OPTIONS -----------------------
 ----------------------------------
@@ -32,21 +32,38 @@ local map = vim.keymap.set
 vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
 
 -- LSP mappings
-map("n", "gD",  vim.lsp.buf.definition)
-map("n", "K",  vim.lsp.buf.hover)
-map("n", "gi", vim.lsp.buf.implementation)
-map("n", "gr", vim.lsp.buf.references)
-map("n", "gds", vim.lsp.buf.document_symbol)
-map("n", "gws", vim.lsp.buf.workspace_symbol)
-map("n", "<leader>cl", vim.lsp.codelens.run)
-map("n", "<leader>sh", vim.lsp.buf.signature_help)
-map("n", "<leader>rn", vim.lsp.buf.rename)
-map("n", "<leader>f", vim.lsp.buf.format )
-map("n", "<leader>ca", vim.lsp.buf.code_action)
+wk.register({
+  c = {
+    d = { vim.lsp.buf.definition, "Goto definition" },
+    i = { vim.lsp.buf.implementation, "Goto implementation" },
+    r = { vim.lsp.buf.references, "Goto references" },
+    l = { vim.lsp.codelens.run, "Codelens" },
+    s = { vim.lsp.buf.document_symbol, "Document symbols" },
+    S = { vim.lsp.buf.workspace_symbol, "Workspace symbols" },
+    h = { vim.lsp.buf.signature_help, "Signature help" },
+    R = { vim.lsp.buf.rename, "Rename" },
+    f = { vim.lsp.buf.format, "Format" },
+    a = { "<cmd>CodeActionMenu<CR>", "Code action" },
+    W = { require("metals").hover_worksheet(), "Hover worksheet" },
+  },
+  A = { vim.lsp.buf.code_action, "Code action" },
+}, { prefix = "<leader>" })
 
-map("n", "<leader>ws", function()
-  require("metals").hover_worksheet()
-end)
+wk.register({
+  K = { vim.lsp.buf.hover, "Hover" },
+})
+
+-- map("n", "gD",
+-- map("n", "gds", vim.lsp.buf.document_symbol)
+-- map("n", "gws", vim.lsp.buf.workspace_symbol)
+-- map("n", "<leader>sh", vim.lsp.buf.signature_help)
+-- map("n", "<leader>rn", vim.lsp.buf.rename)
+-- map("n", "<leader>f", vim.lsp.buf.format)
+-- map("n", "<leader>ca", vim.lsp.buf.code_action)
+
+-- map("n", "<leader>ws", function()
+--   require("metals").hover_worksheet()
+-- end)
 
 -- all workspace diagnostics
 map("n", "<leader>aa", vim.diagnostic.setqflist)
@@ -233,8 +250,8 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   }
 )
 
-vim.diagnostic.config{
-  float={border=_border}
+vim.diagnostic.config {
+  float = { border = _border }
 }
 
 -- highlight FloatBorder  ctermfg=NONE ctermbg=NONE cterm=NONE

@@ -1,133 +1,152 @@
-vim.cmd [[packadd packer.nvim]]
-
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-
+require('lazy').setup({
+  -- neoconf
+  {
+    'folke/neoconf.nvim',
+    config = function()
+      require("neoconf").setup({
+      })
+    end
+  },
+  { "elentok/format-on-save.nvim" },
   -- colorsheme
-  use({
+  {
     'rose-pine/neovim',
-    as = 'rose-pine',
+    name = 'rose-pine',
     --		config = function()
     --			require("rose-pine").setup()
     --			vim.cmd('colorscheme rose-pine')
     --		end
-  })
+  },
+  'Mofiqul/dracula.nvim',
+  -- {'shaunsingh/solarized.nvim',
+  --   config = function ()
+  --    require("solarized").set()
+  --   end},
 
-  use 'shaunsingh/solarized.nvim'
-
-  use 'shaunsingh/nord.nvim'
 
   --
   -- telescope
-  use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-    requires = { { 'nvim-lua/plenary.nvim' },
+  {
+    'nvim-telescope/telescope.nvim',
+    version = '0.1.2',
+    dependencies = { { 'nvim-lua/plenary.nvim' },
       { 'BurntSushi/ripgrep' }
     }
-  }
+  },
 
 
-  use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-  use('theprimeagen/harpoon')
-  use('mbbill/undotree')
-  use('tpope/vim-fugitive')
-  use {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate'
+  },
+  'theprimeagen/harpoon',
+  'mbbill/undotree',
+  'tpope/vim-fugitive',
+  -- Unison
+  {
     "unisonweb/unison",
     branch = "trunk",
-    rtp = "/editor-support/vim"
-  }
-  use({
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. "/editor-support/vim")
+      require("lazy.core.loader").packadd(plugin.dir .. "/editor-support/vim")
+    end,
+    init = function(plugin)
+      require("lazy.core.loader").ftdetect(plugin.dir .. "/editor-support/vim")
+    end,
+  },
+  {
     "hrsh7th/nvim-cmp",
-    requires = {
+    dependencies = {
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
     },
-  })
-use({
+  },
+  {
     "scalameta/nvim-metals",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "mfussenegger/nvim-dap",
     },
-  })
+  },
   -- lsp
-  use {
+  {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
-    requires = {
+    dependencies = {
       -- LSP Support
       { 'neovim/nvim-lspconfig' }, -- Required
       {
-                               -- Optional
+        -- Optional
         'williamboman/mason.nvim',
-        run = function()
-          pcall(vim.cmd, 'MasonUpdate')
-        end,
       },
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' }, -- Required
+      { 'hrsh7th/nvim-cmp' },     -- Required
       { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-      { 'L3MON4D3/LuaSnip' }, -- Required
+      { 'L3MON4D3/LuaSnip' },     -- Required
     }
-  }
-
+  },
+  {
+    'weilbith/nvim-code-action-menu'
+  },
   -- statusline
-  use {
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
+  },
 
   -- smart splits with tmux
-  use('mrjones2014/smart-splits.nvim')
+  'mrjones2014/smart-splits.nvim',
 
   -- code actions
-  use {
+  {
     'kosayoda/nvim-lightbulb',
-    requires = 'antoinemadec/FixCursorHold.nvim',
-  }
-  use({
+    dependencies = 'antoinemadec/FixCursorHold.nvim',
+  },
+  {
     'weilbith/nvim-code-action-menu',
     cmd = 'CodeActionMenu',
-  })
+  },
   -- dap
-  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap" }
+  },
 
   -- java
-  use 'mfussenegger/nvim-jdtls'
+  'mfussenegger/nvim-jdtls',
 
-  use {
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       {
         -- only needed if you want to use the commands with "_with_window_picker" suffix
         's1n7ax/nvim-window-picker',
-        tag = "v1.*"
+        version = "v1.*"
       }
     }
-  }
+  },
+
   -- comments
-  use {
+  {
     'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup(
@@ -144,6 +163,54 @@ use({
         }
       )
     end
+  },
+  'sindrets/diffview.nvim',
+  -- Adds live server support
+  'barrett-ruth/live-server.nvim',
+  -- Adds support for closing brackets
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {
+        fast_wrap = {},
+      }
+    end
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  -- {
+  --   'maxmx03/solarized.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.o.background = 'light' -- or 'light'
+  --
+  --     vim.cmd.colorscheme 'solarized'
+  --   end,
+  -- },
+  -- toggle term
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    opts = {
+      --[[ things you want to change go here]] }
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
   }
-  use {'sindrets/diffview.nvim'}
-end)
+}
+)
